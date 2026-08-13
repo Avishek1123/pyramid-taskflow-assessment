@@ -1,0 +1,85 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String            @id @default(cuid())
+  name          String
+  email         String?           @unique
+  avatarUrl     String?
+  isGuest       Boolean           @default(false)
+  createdAt     DateTime          @default(now())
+  workspaces    WorkspaceMember[]
+  assignedTasks Task[]            @relation("TaskAssignees")
+  reportedTasks Task[]            @relation("TaskReporter")
+}
+
+model Workspace {
+  id        String            @id @default(cuid())
+  name      String
+  avatarUrl String?
+  ownerId   String
+  members   WorkspaceMember[]
+  projects  Project[]
+  createdAt DateTime          @default(now())
+}
+
+model WorkspaceMember {
+  id          String    @id @default(cuid())
+  userId      String
+  workspaceId String
+  role        String    @default("member")
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  name        String
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  columns     Column[]
+  tasks       Task[]
+  createdAt   DateTime  @default(now())
+}
+
+model Column {
+  id        String  @id @default(cuid())
+  name      String
+  order     Int
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tasks     Task[]
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  columnId    String
+  column      Column    @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  order       Int
+  priority    String    @default("MEDIUM")
+  status      String    @default("Backlog")
+  dueDate     DateTime?
+  labels      Label[]
+  assignees   User[]    @relation("TaskAssignees")
+  reporterId  String?
+  reporter    User?     @relation("TaskReporter", fields: [reporterId], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Label {
+  id     String @id @default(cuid())
+  name   String
+  color  String
+  tasks  Task[]
+}

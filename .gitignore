@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# NestJS
+backend/dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Databases
+*.db
+*.db-journal
+*.sqlite
+
+# Logs and OS
+*.log
+.DS_Store
+Thumbs.db
+
+# Deploy / IDE
+.vercel
+.idea
+.vscode
+coverage/
+backend/generated/
+
+# Local agent / editor leftovers
+.agents/
+.claude/
+.windsurf/
+**/skills-lock.json
