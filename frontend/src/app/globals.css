@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (next-themes sets .dark on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #18181b;
+
+  --card: #ffffff;
+  --card-foreground: #18181b;
+
+  --popover: #ffffff;
+  --popover-foreground: #18181b;
+
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
+
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+
+  --destructive: #fef2f2;
+  --destructive-foreground: #dc2626;
+
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #2563eb;
+  --accent-brand: #2563eb;
+
+  --radius: 0.5rem;
+
+  --sidebar: #f7f7f8;
+  --sidebar-hover: #ececef;
+  --sidebar-active: #e4e4e7;
+  --panel: #ffffff;
+  --panel-muted: #f4f4f5;
+  --column: #f4f4f5;
+  --row-hover: #fafafa;
+  --chip: #f4f4f5;
+  --input-fill: #f4f4f5;
+  --danger-soft: #fef2f2;
+  --elevated: #ffffff;
+  --shadow-color: 0 0% 0%;
+}
+
+/* Refined dark theme — softer contrast, readable surfaces */
+.dark {
+  --background: #0c0c0e;
+  --foreground: #f4f4f5;
+
+  --card: #161618;
+  --card-foreground: #f4f4f5;
+
+  --popover: #1a1a1d;
+  --popover-foreground: #f4f4f5;
+
+  --primary: #f4f4f5;
+  --primary-foreground: #0c0c0e;
+
+  --secondary: #222226;
+  --secondary-foreground: #f4f4f5;
+
+  --muted: #222226;
+  --muted-foreground: #a1a1aa;
+
+  --accent: #222226;
+  --accent-foreground: #f4f4f5;
+
+  --destructive: #3f1212;
+  --destructive-foreground: #fca5a5;
+
+  --border: #2a2a2e;
+  --input: #2a2a2e;
+  --ring: #2563eb;
+  --accent-brand: #2563eb;
+
+  --sidebar: #101012;
+  --sidebar-hover: #1c1c20;
+  --sidebar-active: #2a2a30;
+  --panel: #0c0c0e;
+  --panel-muted: #161618;
+  --column: #141416;
+  --row-hover: #1a1a1e;
+  --chip: #222226;
+  --input-fill: #1a1a1e;
+  --danger-soft: #3f1212;
+  --elevated: #1a1a1d;
+  --shadow-color: 0 0% 0%;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-accent-brand: var(--accent-brand);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-panel: var(--panel);
+  --color-panel-muted: var(--panel-muted);
+  --color-column: var(--column);
+  --color-row-hover: var(--row-hover);
+  --color-chip: var(--chip);
+  --color-input-fill: var(--input-fill);
+  --color-danger-soft: var(--danger-soft);
+  --color-elevated: var(--elevated);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* Color Mode focus highlight on every text field */
+input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']):focus,
+textarea:focus,
+select:focus,
+[contenteditable='true']:focus {
+  outline: none !important;
+  border-color: var(--accent-brand) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-brand) 40%, transparent) !important;
+}
+
+/* Composite fields: highlight the outer bar only */
+.focus-shell:focus-within {
+  border-color: var(--accent-brand) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-brand) 40%, transparent) !important;
+}
+
+.focus-shell input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']),
+.focus-shell input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']):focus,
+.focus-shell textarea,
+.focus-shell textarea:focus {
+  border: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background-color: transparent !important;
+}
+
+/* Soften borders / cards in dark */
+.dark .shadow-xs,
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg {
+  --tw-shadow-color: rgba(0, 0, 0, 0.45);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+.glass {
+  background: color-mix(in srgb, var(--background) 80%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+/* Dark-mode polish for common leftover light utilities */
+.dark .bg-white {
+  background-color: var(--card) !important;
+}
+.dark .bg-zinc-50,
+.dark .bg-zinc-50\/80,
+.dark .bg-zinc-50\/60 {
+  background-color: var(--panel-muted) !important;
+}
+.dark .bg-zinc-100 {
+  background-color: var(--muted) !important;
+}
+.dark .bg-\[\#f7f7f8\],
+.dark .bg-\[\#f4f4f5\],
+.dark .bg-\[\#f9f9fb\],
+.dark .bg-\[\#fafafa\] {
+  background-color: var(--panel-muted) !important;
+}
+.dark .border-zinc-100,
+.dark .border-zinc-200,
+.dark .border-zinc-200\/80,
+.dark .border-zinc-200\/60,
+.dark .border-\[\#e8e8ea\],
+.dark .border-\[\#ececee\],
+.dark .border-\[\#f0f0f2\] {
+  border-color: var(--border) !important;
+}
+.dark .text-zinc-900,
+.dark .text-zinc-800,
+.dark .text-zinc-950 {
+  color: var(--foreground) !important;
+}
+.dark .text-zinc-700,
+.dark .text-zinc-600 {
+  color: #d4d4d8 !important;
+}
+.dark .text-zinc-500,
+.dark .text-zinc-400 {
+  color: var(--muted-foreground) !important;
+}
+.dark .text-zinc-300 {
+  color: #71717a !important;
+}
+.dark .hover\:bg-zinc-50:hover,
+.dark .hover\:bg-zinc-50\/80:hover,
+.dark .hover\:bg-zinc-50\/60:hover,
+.dark .hover\:bg-zinc-100:hover {
+  background-color: var(--row-hover) !important;
+}
+.dark .divide-zinc-100 > :not([hidden]) ~ :not([hidden]),
+.dark .divide-\[\#f0f0f2\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border) !important;
+}
