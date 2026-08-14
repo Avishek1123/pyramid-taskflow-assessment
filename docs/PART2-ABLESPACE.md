@@ -1,196 +1,189 @@
-# Part 2 — AbleSpace Take Data (Caseload)
+# Part 2 — AbleSpace Caseload & Take Data
 
-Product walkthrough of AbleSpace’s **Caseload → Take Data** flow, written from exploring the public product (ablespace.io, feature pages, tutorials, and the iOS app listing). This is the core daily job of a school-based SLP, OT, PT, or special educator: open a student, collect IEP goal data during or after a session, and leave with something usable for progress reports and billing.
+**Candidate notes on AbleSpace’s data-collection workflow**  
+Product explored: [ablespace.io](https://www.ablespace.io) · [Features](https://www.ablespace.io/features) · [Data types](https://www.ablespace.io/features/data-types) · [Tutorials](https://www.ablespace.io/tutorials)
 
-Product: [https://www.ablespace.io](https://www.ablespace.io)  
-Tutorials: [https://www.ablespace.io/tutorials](https://www.ablespace.io/tutorials)  
-Data types: [https://www.ablespace.io/features/data-types](https://www.ablespace.io/features/data-types)
-
-If you have a live AbleSpace account, add screenshots under each step before submitting (the assignment accepts a document with screenshots **or** a short video).
+I treated this like a product review for a tool I might ship myself: start from the job a school-based clinician actually has between bell schedules, then walk Caseload → student → Take Data / Data tab → what happens after the session ends. Below is that walkthrough in my own words, plus the gaps I would fix first.
 
 ---
 
-## 1. What problem this screen solves
+## What I think AbleSpace is optimizing for
 
-Special education teams used to carry paper data sheets, sticky notes, and binders. Data got lost, service minutes were guessed later, and IEP graphs were built by hand the night before a meeting.
+A speech therapist, OT, PT, special educator, or para on AbleSpace is not “entering records.” They are trying to answer, during a messy 20–30 minute pull-out:
 
-**Take Data** is AbleSpace’s answer: a caseload-first screen where a clinician picks a student and logs observations against that student’s IEP goals in one sitting. The same action also feeds:
+> Did this student make progress on the IEP goal we are working on today, and can I prove it later without rewriting everything on Sunday night?
 
-- Progress graphs for IEP meetings
-- Session / goal-level service time
-- Medicaid billing notes
-- Shared caseload work with paras and other providers
+Caseload is the entry point because the work is organized around **students they own**, not around empty forms. From there, Take Data (and the faster Data tab) is where trials get logged against goals. AbleSpace’s bet is that if logging a trial is literally one click, people will do it live instead of on sticky notes — and the same clicks can feed graphs, session reports, service-minute tracking, and Medicaid billing notes without a second pass of typing.
 
-The product promise is “collect data with a single click” across 10+ measurement types, then auto-analyze it.
+That is a strong product thesis. The rest of this note is about how that thesis shows up in the Caseload / Take Data path, and where the UI still asks clinicians to do mental work the product could do for them.
 
 ---
 
-## 2. Workflow, in my own words
+## The workflow, as I understand it
 
-### Step A — Land on Caseload
+### 1. Open Caseload
 
-Caseload is the home base. It is a working list of *my* students, not a generic student directory. I expect to see:
+Caseload is my working roster. It is not a district-wide student search; it is “who am I responsible for.” That distinction matters. Between periods, a clinician’s question is usually:
 
-- Student name and identifying context (grade, school, caseload tags)
-- A sense of “who do I still need to see today?”
-- Entry points into goals, notes, sessions, and **Take Data**
+- Who am I seeing next?
+- Have I already taken data on them this week?
+- Can I jump straight into logging without configuring anything?
 
-This matches how a therapist actually starts a period: “Who is on my list, and who am I seeing next?”
+AbleSpace also lets you download/print the caseload and bulk-add students, which tells me they expect real district volumes, not demo lists of five kids. Collaboration features (sharing students with paras/assistants so they can take data too) sit on top of this same list — Caseload is the shared spine of the product.
 
-### Step B — Choose a student
+### 2. Open a student and look at goals before you tap anything
 
-Opening a student should answer three questions immediately:
+Before Take Data is useful, the student needs goals, and each goal needs a **data type**. This is not a small setup detail — it is the product’s core modeling choice.
 
-1. What are their active IEP goals?
-2. Have I already taken data recently?
-3. Can I start collecting *now* without hunting through settings?
+AbleSpace supports different measurement shapes on purpose, including:
 
-Goals are the unit of work. Each goal has a measurement type (accuracy, frequency, duration, prompting, task analysis, rating scale, anecdotal, custom, and so on). The Take Data UI has to change shape based on that type. A frequency goal is a tally. An accuracy goal is correct / incorrect. Duration is a timer. Anecdotal is a text note. That is the hard UX problem this screen is solving.
+| Data type | What the clinician is actually recording |
+| --- | --- |
+| Accuracy | Correct vs incorrect → percentage (e.g. /r/ production in words) |
+| Frequency | Count of something happening (hand raises, peer greetings, AAC requests) |
+| Opportunity | Total / correct / incorrect in a set of chances |
+| Prompting Levels | How much help was needed (or MCQ-style levels) |
+| Task Analysis / Task with Prompts | Steps of a routine, optionally with prompt level per step |
+| Duration | How long a behavior or skill lasted |
+| Rating Scale | Position on a defined scale |
+| Anecdotal | Qualitative note when a number would lie |
+| Custom | Mix numbers, text, checkboxes, calculated fields |
 
-### Step C — Open Take Data
+Example I kept in my head while reviewing: a student named Maya has an articulation goal measured as **Accuracy** (“produce /s/ in initial position with 80% accuracy across 20 trials”) and a pragmatic goal measured as **Frequency** (“initiate a peer greeting 3 times per recess”). Those two goals cannot share the same input UI. AbleSpace’s Take Data screen has to reshape itself per goal, or the graphs later will be meaningless.
 
-From Caseload, Take Data is the “session mode” overlay or page. Mentally it is:
+If goals are missing or the wrong type is chosen, Take Data becomes a dead end. The tutorials (“How to add a Goal?”, “How to take data…”) exist because this setup step is easy to get wrong the first week.
 
-> I am with this student (or just finished with them). Let me tap through their goals as fast as the session allows.
+### 3. Take Data during (or right after) the session
 
-Typical actions on this screen:
+This is the screen the assignment asks about.
 
-- Confirm the student and the session / date
-- See the list of goals that are due or relevant today
-- Log a trial or observation with one tap (`+` correct, `-` incorrect, increment a count, start/stop a timer, pick a prompt level)
-- Optionally add a short note
-- Move to the next goal without leaving the page
-- Save so the trial is attached to the student, the goal, and the session
+In plain language, the loop is:
 
-AbleSpace also has a dedicated **Data** tab for faster logging and a way to enter data on **past sessions**. That tells me they know the real workflow is messy: sometimes you take data live, sometimes you catch up after the student leaves.
+1. I am with the student (or I just walked them back to class).
+2. I open Take Data from Caseload / the student.
+3. I see that student’s goals.
+4. For each goal I work on, I log trials the way the data type expects — tap correct/incorrect for Accuracy, bump a counter for Frequency, run a timer for Duration, pick a prompt level, check off task-analysis steps, or type a short anecdotal note.
+5. I move to the next goal without leaving the flow.
+6. The session is saved against the student, the goal, and the time I was with them.
 
-### Step D — Service time rides along
+Two product details that stood out as honest about school life:
 
-While data is being taken, AbleSpace can track service minutes at session level and at goal level. That is important because Medicaid and district compliance care about *time*, not only *accuracy*. A good Take Data screen does not make time tracking a separate chore.
+- There is a dedicated **Data tab** for logging quickly (tutorial: “How to log your data quickly using Data tab?”). That is the “I have 40 seconds between kids” path.
+- You can enter data on **past sessions**. Therapists do not always get to tap during the activity. Catch-up is not an edge case; it is Tuesday afternoon.
 
-### Step E — Leave with artifacts
+AbleSpace also tracks **service time at session level and at goal level** while this is happening. That is important. Medicaid and district compliance often care as much about minutes served as about % correct. If time tracking were a separate form after Take Data, people would skip it. Bundling it into the same visit is the right call.
 
-After save, the same data should show up in:
+### 4. What the data becomes after you leave the screen
 
-- Goal progress graphs
-- Session reports
-- Billing notes (copy/paste for Medicaid)
-- Shared views if a para or another therapist is on the student
+If Take Data only stored numbers, clinicians would still open Excel later. AbleSpace’s payoff is that the same trials become:
 
-The clinician should not re-enter anything.
+- Progress graphs (they advertise 20+ auto-built graph options)
+- Pre-built reports for IEP meetings
+- Service-time reports
+- Medicaid billing notes meant to be copied and pasted, not rewritten
 
----
-
-## 3. What works well (product thinking)
-
-**Caseload as the spine.** Starting from people, not from a blank form, matches the job. Teachers think “Maya’s articulation goals,” not “create a new data record.”
-
-**Measurement types are first-class.** Over 10 data types is not feature bloat here. IEP goals are written in different units on purpose. If the UI only had a number field, clinicians would invent workarounds and the graphs would lie.
-
-**One-click collection.** Reducing a trial to a tap is the difference between using the tool *during* therapy and filling it in after school. That is the product’s main adoption bet.
-
-**Catch-up paths.** Past sessions, bulk add, and a Data tab show they understand classrooms are interrupt-driven.
-
-**Downstream automation.** Graphs, billing notes, and service-time reports justify the extra tap during the session. People will only take digital data if it saves them Sunday night work.
-
-**Collaboration.** Paras taking data on a shared student is a real district requirement. Paper never handled this cleanly.
+That closed loop is why one-click collection can stick. The click has to buy back weekend paperwork, or paper wins.
 
 ---
 
-## 4. UX / UI and functionality improvements I would make
+## What I think they got right
 
-These are suggestions, not bugs I can confirm without a logged-in account. I would validate each with a therapist shadow session.
+**Students first, not forms first.** Starting on Caseload matches how people talk about their day (“I have Maya at 10:15”), not how databases are structured.
 
-### 1. Make “who still needs data today” obvious on Caseload
+**Data types are treated as real domain objects.** Over 10 types looks like feature sprawl until you remember IEP goals are written that way in legal documents. A single numeric field would force therapists to invent private coding systems, and then graphs would lie at the IEP meeting.
 
-Caseload lists can get long. I would add a compact status chip per student: **Data taken today / Due / Overdue / Absent**. A therapist between sessions should scan the list in two seconds and know who is left. Color alone is not enough; use text + icon for accessibility.
+**Speed is the product.** “Collect data with a single click” and mobile/iPad support are not marketing fluff. If the UI is slower than a clipboard tally, it will not be used mid-session. Period.
 
-### 2. Session-first Take Data, with a “quick trial” strip
+**They admit the workflow is messy.** Past sessions, Data tab, bulk add, rotating schedules, and para sharing all say: school days interrupt you; the tool should still accept the data later without shame.
 
-The current mental model is student → goals → trials. I would add a sticky header:
-
-- Student name
-- Session timer (service minutes) always visible
-- Goal progress “3 of 8 goals logged”
-- A large **Next goal** control for one-handed iPad use
-
-Therapists often hold materials in one hand. Hit targets should be thumb-sized, especially `+` / `-`.
-
-### 3. Offline / flaky-wifi mode
-
-Schools have dead zones. If a tap does not persist, trust dies immediately. I would queue trials locally, show a “Saved on device — syncing…” state, and never block the next trial on a network round-trip.
-
-### 4. Smarter goal ordering
-
-Surface goals that:
-
-- Have not been probed this week
-- Are due for progress reporting
-- Match the scheduled session type (speech vs OT)
-
-A rotating-schedule feature already exists; Take Data should inherit that order instead of a static list.
-
-### 5. Undo and “wrong student” recovery
-
-One-click data is fast and also dangerous. I would add:
-
-- Immediate undo toast (“Logged +1 on Goal 4 — Undo”)
-- Confirm when switching students mid-session
-- A “this trial was for a different goal” move action
-
-### 6. Prompt-level and anecdotal without breaking flow
-
-Prompting and anecdotal notes are slower than a tally. I would keep the fast tap row, and open a lightweight sheet for prompt / note only when needed, instead of changing the whole page layout per goal type.
-
-### 7. Live preview of the graph
-
-After 3–4 trials, show a tiny sparkline on the Take Data screen: “This session vs last 4.” Clinicians decide *in the moment* whether to probe more. Waiting until the Reports tab is too late.
-
-### 8. Reduce billing anxiety
-
-If service minutes look short, say so before the session is closed: “Speech session is 18 minutes. Medicaid often expects 30. Add note or adjust time?” That is a compliance nudge, not a blocker.
-
-### 9. Caseload density on mobile
-
-On phone, a card-per-student list wastes space. A compact table (name, next session, data status, Take Data button) would let a therapist walk the hallway and tap in 1 second.
-
-### 10. Empty and first-run states
-
-New users add a student and then do not know they must add a goal *and* pick a data type before Take Data is useful. I would use a checklist empty state: Add student → Add goal → Choose data type → Take first trial. The tutorials exist; the product should teach this inline.
+**Downstream automation is the retention loop.** Graphs, reports, and billing notes are why the tap is worth doing. AbleSpace is selling “never rebuild this in Google Sheets before the meeting.”
 
 ---
 
-## 5. How this connects to Part 1 (TaskFlow)
+## Improvements I would push (specific, not generic)
 
-Building the Figma task app made the same product questions obvious:
+I did not treat these as “nice polish.” These are the places I would expect a clinician to get stuck or lose trust.
 
-- **Home object:** AbleSpace’s home object is the *student*. TaskFlow’s is the *task*. Both need a clear “current context” (caseload vs workspace).
-- **Fast capture vs rich detail:** Take Data must be faster than paper. TaskFlow’s board vs detail page is the same split (scan vs inspect).
-- **Persistence of mode:** Therapists need the last student / last goal. We persist theme and workspace for the same reason — do not reset the user’s place.
-- **Destructive actions:** Deleting a workspace (or a student / goal) needs an “Are you sure?” Because one-click speed and one-click regret live together.
+### 1. Caseload should answer “who still needs data today?” without opening anyone
 
-If I were designing Take Data inside AbleSpace, I would steal TaskFlow’s discipline on spacing, persistent context, and confirmations, then optimize every control for one-handed, in-session use.
+A long Caseload is a wall of names. Between sessions I do not want to open each student to remember if I logged them. I would put a small, text-backed status on every row, for example:
+
+- **Logged today**
+- **Due this week**
+- **Overdue**
+- **Absent / no session**
+
+Color alone is not enough in a fluorescent hallway on a phone. Text + icon. Sort / filter by “needs data” should be one tap from the Caseload header.
+
+### 2. Take Data needs a sticky “session strip”
+
+While logging, I am holding materials or an AAC device. I should always see, pinned at the top:
+
+- Student name (so I never log on the wrong kid after a switch)
+- Running service minutes
+- “Goals logged this session: 2 / 6”
+- A large **Next goal** control sized for a thumb
+
+Right now the mental model is student → goal list → trials. That is correct structurally, but mid-session the UI should feel more like a stopwatch + checklist than like a form browser.
+
+### 3. Never wait on the network for the next trial
+
+School Wi‑Fi drops in basements and temporary classrooms. If a correct/incorrect tap spins or fails, the therapist goes back to paper and may not return. Trials should write to a local queue first (“Saved on device — syncing…”), and the next tap must stay instant. Sync conflicts can be resolved later; blocking the session cannot.
+
+### 4. Order goals by what this session actually needs
+
+AbleSpace already has rotating schedules and calendar sessions. Take Data should inherit that: put today’s scheduled goals first, then goals with no data this week, then everything else. A static full goal list forces the clinician to scroll past goals they are not probing today, which is exactly when mis-taps happen.
+
+### 5. One-click needs one-tap Undo
+
+Speed without recovery is dangerous. After every trial I want a quiet toast:
+
+> Logged correct on Goal 3 (/s/ initial) — **Undo**
+
+Also: confirm when switching students mid-session, and let me move a mistaken trial to another goal without deleting history. Paras especially will hit the wrong control under time pressure.
+
+### 6. Keep complex data types from breaking the fast path
+
+Accuracy and Frequency can stay as big hit targets. Prompting, Task Analysis, and Anecdotal are slower by nature. I would not rebuild the whole page for those. Keep the same goal list rhythm; open a compact sheet for prompt level / steps / note only when that goal needs it. Context switching costs more than an extra panel.
+
+### 7. Show a tiny progress sparkline on Take Data itself
+
+After a few trials, show “this session vs last 4 sessions” next to the goal. Clinicians decide *in the room* whether to probe more. Sending them to a Reports tab after the student has left is too late for that decision, even if the full graphs are excellent later.
+
+### 8. Warn about thin service minutes before the session is closed
+
+If I logged beautiful Accuracy data but only 12 service minutes on a session that is usually billed longer, nudge me before I leave:
+
+> Service time is 12 minutes. Add a note or adjust time before closing?
+
+Not a hard block — a compliance heads-up. Billing anxiety is real; silent short sessions create cleanup work later, which is what AbleSpace claims to remove.
+
+### 9. Teach the setup path inside the empty state
+
+New users can add a student, open Take Data, and hit a wall because no goal / no data type exists yet. Tutorials help, but the empty state should be a checklist on the screen itself:
+
+1. Add student  
+2. Add at least one goal  
+3. Pick the data type that matches the IEP wording  
+4. Take the first trial  
+
+First-run success is a product feature, not a help-center article.
 
 ---
 
-## 6. Screenshots / video (add before submit)
+## Bottom line
 
-| # | Capture this | Why |
-| --- | --- | --- |
-| 1 | Caseload list | Shows the starting point |
-| 2 | Student opened from Caseload | Goals and identity |
-| 3 | Take Data screen mid-session | Core workflow |
-| 4 | A second data type (e.g. duration or prompting) | Shows flexibility |
-| 5 | Result in a graph or session report | Shows the payoff |
-
-Optional: a 2–3 minute Loom walking the same five shots.
+AbleSpace’s Caseload → Take Data path is built around the right object (the student), the right atomic action (one trial), and the right payoff (graphs, reports, minutes, billing without re-entry). The places I would invest next are not “more features” — they are **situational awareness on Caseload**, **session continuity on Take Data**, **offline trust**, and **recovery from fast mistakes**. Those are the differences between a tool therapists admire in a demo and a tool they still open when the hallway is loud and they have four minutes left.
 
 ---
 
-## Sources
+## Optional screenshots for submission
 
-- AbleSpace product and features: https://www.ablespace.io / https://www.ablespace.io/features
-- Data types: https://www.ablespace.io/features/data-types
-- Tutorials (Take Data, Data tab, past sessions, caseload): https://www.ablespace.io/tutorials
-- Caseload management overview: https://www.ablespace.io/blog/ablespace-sped-caseload-management-made-easy
-- App Store listing (mobile data collection): AbleSpace — IEP Goal Tracking
+If you have login access, attach these under the matching sections above:
+
+1. Caseload list  
+2. One student with goals of two different data types  
+3. Take Data (or Data tab) mid-logging  
+4. A graph or session/billing artifact produced from that data  
+
+Sources used while writing this: AbleSpace product/features pages, data-types reference, tutorial index (Take Data, Data tab, past sessions, caseload), and AbleSpace’s own writing on caseload management and IEP progress monitoring.
