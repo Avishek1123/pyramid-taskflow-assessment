@@ -2,6 +2,7 @@
 
 Full-stack technical assessment: a task management app implemented from the provided Figma design.
 
+**Repository:** [https://github.com/Avishek1123/pyramid-taskflow-assessment](https://github.com/Avishek1123/pyramid-taskflow-assessment)  
 **Live app:** _add your Vercel URL after deploy_  
 **API health:** _add your Render URL_ `/api/health`  
 **Part 2:** [docs/PART2-ABLESPACE.md](docs/PART2-ABLESPACE.md)
