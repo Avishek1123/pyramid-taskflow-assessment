@@ -207,7 +207,10 @@ export function useTasks(projectId?: string) {
 
   const createTaskMutation = useMutation({
     mutationFn: (task: TaskInput) => apiClient.post(`/projects/${projectId}/tasks`, task),
-    onSuccess: () => {
+    onSuccess: (created) => {
+      queryClient.setQueryData(['tasks', projectId], (old: any[] | undefined) =>
+        old ? [...old, created] : [created],
+      );
       queryClient.invalidateQueries({ queryKey: ['tasks', projectId] });
     },
   });
@@ -215,21 +218,50 @@ export function useTasks(projectId?: string) {
   const updateTaskMutation = useMutation({
     mutationFn: ({ taskId, data }: { taskId: string; data: Partial<TaskInput> }) =>
       apiClient.patch(`/tasks/${taskId}`, data),
-    onSuccess: () => {
+    onMutate: async ({ taskId, data }) => {
+      await queryClient.cancelQueries({ queryKey: ['tasks', projectId] });
+      const previousTasks = queryClient.getQueryData(['tasks', projectId]);
+      queryClient.setQueryData(['tasks', projectId], (old: any[] | undefined) =>
+        (old || []).map((t) => (t.id === taskId ? { ...t, ...data } : t)),
+      );
+      return { previousTasks };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previousTasks) {
+        queryClient.setQueryData(['tasks', projectId], context.previousTasks);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks', projectId] });
     },
   });
 
   const deleteTaskMutation = useMutation({
     mutationFn: (taskId: string) => apiClient.delete(`/tasks/${taskId}`),
-    onSuccess: () => {
+    onMutate: async (taskId) => {
+      await queryClient.cancelQueries({ queryKey: ['tasks', projectId] });
+      const previousTasks = queryClient.getQueryData(['tasks', projectId]);
+      queryClient.setQueryData(['tasks', projectId], (old: any[] | undefined) =>
+        (old || []).filter((t) => t.id !== taskId),
+      );
+      return { previousTasks };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previousTasks) {
+        queryClient.setQueryData(['tasks', projectId], context.previousTasks);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks', projectId] });
     },
   });
 
   const duplicateTaskMutation = useMutation({
     mutationFn: (taskId: string) => apiClient.post(`/tasks/${taskId}/duplicate`),
-    onSuccess: () => {
+    onSuccess: (created) => {
+      queryClient.setQueryData(['tasks', projectId], (old: any[] | undefined) =>
+        old ? [...old, created] : [created],
+      );
       queryClient.invalidateQueries({ queryKey: ['tasks', projectId] });
     },
   });

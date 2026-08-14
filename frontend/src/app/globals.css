@@ -250,3 +250,14 @@ select:focus,
 .dark .divide-\[\#f0f0f2\] > :not([hidden]) ~ :not([hidden]) {
   border-color: var(--border) !important;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

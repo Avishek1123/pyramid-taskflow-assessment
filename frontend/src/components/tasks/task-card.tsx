@@ -52,10 +52,11 @@ export function TaskCard({
     isDragging,
   } = useSortable({ id: task.id });
 
-  const style = {
+  const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.35 : 1,
+    transition: transition ?? 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)',
+    opacity: isDragging ? 0.4 : 1,
+    willChange: 'transform',
   };
 
   const getDueDateProps = (dateStr?: string) => {
@@ -95,8 +96,8 @@ export function TaskCard({
       onClick={handleCardClick}
       className={cn(
         'group flex flex-col gap-2.5 rounded-[10px] border border-border bg-card p-3.5',
-        'hover:border-muted-foreground/30 transition-all select-none cursor-pointer shadow-[0_1px_2px_rgba(0,0,0,0.03)]',
-        isDragging && 'z-50 border-ring shadow-md ring-2 ring-ring/10'
+        'hover:border-muted-foreground/30 transition-[border-color,box-shadow,background-color] duration-200 select-none cursor-pointer shadow-[0_1px_2px_rgba(0,0,0,0.03)]',
+        isDragging && 'z-50 border-ring shadow-md ring-2 ring-ring/10 scale-[1.02]'
       )}
     >
       <div className="flex items-start justify-between gap-2">

@@ -21,6 +21,8 @@ import {
 } from '../ui/dropdown-menu';
 import { PriorityBadge } from '../ui/priority-icon';
 import { cn } from '../../lib/utils';
+import { AnimatePresence } from 'motion/react';
+import { AnimatedRow } from '../ui/animated-list';
 
 interface ListViewProps {
   tasks: any[];
@@ -136,15 +138,18 @@ export function ListView({
                         </td>
                       </tr>
                     ) : (
-                      colTasks.map((task, idx) => (
-                        <tr
-                          key={task.id}
-                          onClick={() => handleRowClick(task)}
-                          className={cn(
-                            'group cursor-pointer text-foreground hover:bg-row-hover transition-colors',
-                            idx !== colTasks.length - 1 && 'border-b border-border/60'
-                          )}
-                        >
+                      <AnimatePresence initial={false} mode="popLayout">
+                        {colTasks.map((task, idx) => (
+                          <AnimatedRow
+                            key={task.id}
+                            id={task.id}
+                            index={idx}
+                            onClick={() => handleRowClick(task)}
+                            className={cn(
+                              'group cursor-pointer text-foreground hover:bg-row-hover transition-colors',
+                              idx !== colTasks.length - 1 && 'border-b border-border/60'
+                            )}
+                          >
                           <td className="py-3 px-4">
                             <span className="font-medium text-foreground">{task.title}</span>
                           </td>
@@ -238,8 +243,9 @@ export function ListView({
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </td>
-                        </tr>
-                      ))
+                          </AnimatedRow>
+                        ))}
+                      </AnimatePresence>
                     )}
                   </tbody>
                 </table>

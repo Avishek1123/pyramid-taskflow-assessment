@@ -13,6 +13,7 @@ import {
 } from '../ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../ui/dialog';
 import { Button } from '../ui/button';
+import { AnimatedItem, AnimatedPresenceList } from '../ui/animated-list';
 
 interface KanbanColumnProps {
   column: {
@@ -122,24 +123,29 @@ export function KanbanColumn({
       </div>
 
       {/* Task List container */}
-      <div ref={setNodeRef} className="flex-1 overflow-y-auto p-2.5 space-y-2.5">
-        <SortableContext items={tasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
-          {tasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              visibleFields={visibleFields}
-              onEdit={onEditTask}
-              onDelete={onDeleteTask}
-              onDuplicate={onDuplicateTask}
-            />
-          ))}
+      <div ref={setNodeRef} className="flex-1 overflow-y-auto p-2.5">
+        <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
+          <div className="flex flex-col gap-2.5">
+            <AnimatedPresenceList>
+              {tasks.map((task, index) => (
+                <AnimatedItem key={task.id} id={task.id} index={index}>
+                  <TaskCard
+                    task={task}
+                    visibleFields={visibleFields}
+                    onEdit={onEditTask}
+                    onDelete={onDeleteTask}
+                    onDuplicate={onDuplicateTask}
+                  />
+                </AnimatedItem>
+              ))}
+            </AnimatedPresenceList>
+          </div>
         </SortableContext>
 
         {/* Add Task link */}
         <button
           onClick={() => onAddTaskClick(column.id)}
-          className="w-full flex items-center justify-start space-x-1.5 py-1.5 px-1 rounded-md text-xs text-muted-foreground hover:text-foreground transition-colors font-medium cursor-pointer"
+          className="mt-2.5 w-full flex items-center justify-start space-x-1.5 py-1.5 px-1 rounded-md text-xs text-muted-foreground hover:text-foreground transition-colors font-medium cursor-pointer"
         >
           <Plus className="h-3.5 w-3.5" />
           <span>Add Task</span>

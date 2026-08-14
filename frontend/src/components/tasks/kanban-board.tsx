@@ -118,13 +118,17 @@ export function KanbanBoard({
   return (
     <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className="flex h-full items-start space-x-4 overflow-x-auto pb-4 pr-10 min-h-[calc(100vh-12rem)] scroll-smooth snap-x">
-        {columns.map((col) => {
+        {columns.map((col, colIndex) => {
           const colTasks = tasks
             .filter((t) => t.columnId === col.id)
             .sort((a, b) => a.order - b.order);
 
           return (
-            <div key={col.id} className="snap-center">
+            <div
+              key={col.id}
+              className="snap-center animate-in fade-in slide-in-from-bottom-2 fill-mode-both"
+              style={{ animationDuration: '320ms', animationDelay: `${Math.min(colIndex * 40, 160)}ms` }}
+            >
               <KanbanColumn
                 column={col}
                 tasks={colTasks}
@@ -151,9 +155,14 @@ export function KanbanBoard({
       </div>
 
       {/* Drag overlay to show a copy of the card floating */}
-      <DragOverlay dropAnimation={null}>
+      <DragOverlay
+        dropAnimation={{
+          duration: 240,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        }}
+      >
         {activeTaskId && activeTask ? (
-          <div className="w-72 cursor-grabbing rotate-[2deg] shadow-lg">
+          <div className="w-[280px] cursor-grabbing rotate-[2deg] scale-[1.03] shadow-xl opacity-95 transition-transform">
             <TaskCard
               task={activeTask}
               visibleFields={visibleFields}
