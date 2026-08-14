@@ -123,6 +123,10 @@ If Take Data only stored numbers, clinicians would still open Excel later. AbleS
 
 *Screenshot 5 — TRACK → Report → Attendance. Demo Student1 selected, date range All Time, summary cards (1 Sessions / 1 Attended / 0 Missed / 30m Service Time), and a Stats table with Present + 30 min. This is the payoff after capture: minutes and attendance without rebuilding a spreadsheet.*
 
+![AbleSpace Student Sessions report — goals, trials, accuracy, prompts, notes](screenshots/06-student-sessions-report.png)
+
+*Screenshot 6 — TRACK → Report → Student Sessions. Session report for Demo Student1 with provider, service time (30 minutes), student notes (“Reading goal was successfully met today”), and GOAL 3: MATH broken into Trial / Provider / Accuracy / Prompts / Notes. This is the IEP-meeting artifact that Take Data is supposed to produce without a second pass of typing.*
+
 That closed loop is why one-click collection can stick. The click has to buy back weekend paperwork, or paper wins.
 
 ---
@@ -227,5 +231,6 @@ AbleSpace’s Caseload → Take Data path is built around the right object (the 
 | 3 | `screenshots/04-goals-measurements.png` | Goals list with Frequency / Accuracy / Task Analysis | Added |
 | 4 | `screenshots/03-data-tab-logged.png` | Data tab — logged sessions, values, notes | Added |
 | 5 | `screenshots/05-attendance-report.png` | Attendance report + service minutes | Added |
+| 6 | `screenshots/06-student-sessions-report.png` | Student Sessions report (goal trials + notes) | Added |
 
 Sources used while writing this: live AbleSpace session (screenshots above), product/features pages, data-types reference, tutorial index (Take Data, Data tab, past sessions, caseload), and AbleSpace’s writing on caseload management and IEP progress monitoring.
