@@ -108,7 +108,9 @@ export function KanbanColumn({
                 <span>Rename column</span>
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => onDeleteColumn(column.id)}
+                onClick={() => {
+                  window.setTimeout(() => onDeleteColumn(column.id), 50);
+                }}
                 className="flex items-center space-x-2 text-red-500 hover:text-red-600 hover:bg-danger-soft focus:text-red-500 text-xs cursor-pointer py-1.5"
               >
                 <Trash2 className="h-3.5 w-3.5" />

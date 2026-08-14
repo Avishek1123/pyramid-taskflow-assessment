@@ -362,17 +362,17 @@ export function WorkspaceSwitcher({ collapsed = false }: { collapsed?: boolean }
       <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <DialogContent className="max-w-sm border border-border bg-card text-foreground">
           <DialogHeader>
-            <DialogTitle className="text-base font-semibold">Are you sure?</DialogTitle>
+            <DialogTitle className="text-base font-semibold">Delete workspace?</DialogTitle>
           </DialogHeader>
           <p className="py-2 text-[13px] leading-relaxed text-muted-foreground">
-            Are you sure you want to delete{' '}
-            <span className="font-semibold text-foreground">{deleteTarget?.name}</span>? All projects and
-            tasks in this workspace will be removed. This cannot be undone.
+            You are about to permanently delete{' '}
+            <span className="font-semibold text-foreground">“{deleteTarget?.name}”</span>.
+            Every project, board column, and task inside this workspace will be removed. This cannot be undone.
           </p>
           {deleteError && <p className="text-[12px] text-[#ef4444]">{deleteError}</p>}
           <DialogFooter className="flex items-center justify-end space-x-2">
             <Button type="button" variant="ghost" className="text-xs" onClick={() => setDeleteTarget(null)}>
-              Cancel
+              Keep workspace
             </Button>
             <Button
               type="button"
@@ -380,7 +380,7 @@ export function WorkspaceSwitcher({ collapsed = false }: { collapsed?: boolean }
               onClick={handleDeleteWorkspace}
               className="bg-[#ef4444] text-xs text-white hover:bg-[#dc2626]"
             >
-              {isDeletingWorkspace ? 'Deleting...' : 'Yes, delete'}
+              {isDeletingWorkspace ? 'Deleting…' : 'Delete workspace'}
             </Button>
           </DialogFooter>
         </DialogContent>

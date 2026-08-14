@@ -27,6 +27,7 @@ import {
   DropdownMenuTrigger,
 } from '../../../components/ui/dropdown-menu';
 import { PriorityBadge } from '../../../components/ui/priority-icon';
+import { ConfirmDialog } from '../../../components/ui/confirm-dialog';
 
 const mockPriorities = ['HIGH', 'LOW', 'MEDIUM'];
 const mockDates = ['12 Sep 2026', '15 Sep 2026', '18 Sep 2026'];
@@ -65,6 +66,9 @@ export default function ProjectsPage() {
   const [renameId, setRenameId] = React.useState<string | null>(null);
   const [renameValue, setRenameValue] = React.useState('');
   const [isRenaming, setIsRenaming] = React.useState(false);
+  const [deleteTarget, setDeleteTarget] = React.useState<{ id: string; name: string } | null>(null);
+  const [isDeleting, setIsDeleting] = React.useState(false);
+  const [deleteError, setDeleteError] = React.useState('');
 
   const handleCreateProject = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,12 +102,26 @@ export default function ProjectsPage() {
     }
   };
 
-  const handleDelete = async (projectId: string) => {
-    if (!confirm('Delete this project and all its tasks?')) return;
+  const handleDelete = (projectId: string) => {
+    const project = projects.find((p: any) => p.id === projectId);
+    setDeleteError('');
+    setDeleteTarget({
+      id: projectId,
+      name: project?.name || 'this project',
+    });
+  };
+
+  const confirmDeleteProject = async () => {
+    if (!deleteTarget) return;
+    setIsDeleting(true);
+    setDeleteError('');
     try {
-      await deleteProject(projectId);
-    } catch (err) {
-      console.error(err);
+      await deleteProject(deleteTarget.id);
+      setDeleteTarget(null);
+    } catch (err: any) {
+      setDeleteError(err?.message || 'Could not delete this project. Please try again.');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -225,7 +243,10 @@ export default function ProjectsPage() {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator className="bg-zinc-100" />
                             <DropdownMenuItem
-                              onClick={() => handleDelete(project.id)}
+                              onClick={() => {
+                                const target = { id: project.id, name: project.name };
+                                window.setTimeout(() => handleDelete(target.id), 50);
+                              }}
                               className="flex items-center space-x-2 text-red-500 hover:bg-red-50 focus:text-red-500 cursor-pointer text-xs"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
@@ -312,6 +333,24 @@ export default function ProjectsPage() {
           </form>
         </DialogContent>
       </Dialog>
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+        title="Delete project?"
+        description={
+          <>
+            You are about to permanently delete{' '}
+            <span className="font-semibold text-foreground">“{deleteTarget?.name}”</span>.
+            All columns and tasks inside this project will be removed. This cannot be undone.
+          </>
+        }
+        confirmLabel="Delete project"
+        cancelLabel="Keep project"
+        loading={isDeleting}
+        error={deleteError}
+        onConfirm={confirmDeleteProject}
+      />
     </div>
   );
 }

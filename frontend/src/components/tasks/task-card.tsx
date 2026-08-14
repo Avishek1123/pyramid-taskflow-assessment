@@ -141,7 +141,7 @@ export function TaskCard({
             <DropdownMenuItem
               onClick={(e) => {
                 e.stopPropagation();
-                onDelete(task.id);
+                window.setTimeout(() => onDelete(task.id), 50);
               }}
               className="flex items-center space-x-2 text-red-500 hover:text-red-600 hover:bg-red-50 focus:text-red-500 cursor-pointer text-xs py-1.5"
             >

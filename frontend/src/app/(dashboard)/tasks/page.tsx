@@ -17,6 +17,7 @@ import { SidebarContext } from '../layout';
 import { Loader2, Plus, FolderKanban } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../../../components/ui/dialog';
 import { Button } from '../../../components/ui/button';
+import { ConfirmDialog } from '../../../components/ui/confirm-dialog';
 
 interface TasksPageProps {
   // Empty, no longer injected via cloneElement
@@ -72,6 +73,9 @@ function TasksPageContent(props: TasksPageProps) {
   const [isAddProjOpen, setIsAddProjOpen] = React.useState(false);
   const [newProjName, setNewProjName] = React.useState('');
   const [isCreatingProj, setIsCreatingProj] = React.useState(false);
+  const [deleteColumnTarget, setDeleteColumnTarget] = React.useState<{ id: string; name: string } | null>(null);
+  const [deleteTaskTarget, setDeleteTaskTarget] = React.useState<{ id: string; title: string } | null>(null);
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
   // Load preferences from localStorage on mount
   React.useEffect(() => {
@@ -158,9 +162,41 @@ function TasksPageContent(props: TasksPageProps) {
     await updateColumn({ columnId: colId, name });
   };
 
-  const handleDeleteColumn = async (colId: string) => {
-    if (confirm('Are you sure you want to delete this column and all its tasks?')) {
-      await deleteColumn(colId);
+  const handleDeleteColumn = (colId: string) => {
+    const column = columns.find((c: any) => c.id === colId);
+    setDeleteColumnTarget({
+      id: colId,
+      name: column?.name || 'this column',
+    });
+  };
+
+  const handleDeleteTask = (taskId: string) => {
+    const task = tasks.find((t: any) => t.id === taskId);
+    setDeleteTaskTarget({
+      id: taskId,
+      title: task?.title || 'this task',
+    });
+  };
+
+  const confirmDeleteColumn = async () => {
+    if (!deleteColumnTarget) return;
+    setIsDeleting(true);
+    try {
+      await deleteColumn(deleteColumnTarget.id);
+      setDeleteColumnTarget(null);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const confirmDeleteTask = async () => {
+    if (!deleteTaskTarget) return;
+    setIsDeleting(true);
+    try {
+      await deleteTask(deleteTaskTarget.id);
+      setDeleteTaskTarget(null);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -306,7 +342,7 @@ function TasksPageContent(props: TasksPageProps) {
             onMoveTask={(taskId, columnId, order) => moveTask({ taskId, columnId, order })}
             onAddTaskClick={handleAddTaskClick}
             onEditTask={handleEditTaskClick}
-            onDeleteTask={deleteTask}
+            onDeleteTask={handleDeleteTask}
             onDuplicateTask={duplicateTask}
             onRenameColumn={handleRenameColumn}
             onDeleteColumn={handleDeleteColumn}
@@ -319,7 +355,7 @@ function TasksPageContent(props: TasksPageProps) {
               columns={columns}
               visibleFields={visibleFields}
               onEditTask={handleEditTaskClick}
-              onDeleteTask={deleteTask}
+              onDeleteTask={handleDeleteTask}
               onDuplicateTask={duplicateTask}
               onAddTaskClick={handleAddTaskClick}
             />
@@ -337,6 +373,40 @@ function TasksPageContent(props: TasksPageProps) {
         task={modalTask}
         defaultColumnId={modalDefaultColId}
         onSave={handleSaveTask}
+      />
+
+      <ConfirmDialog
+        open={!!deleteColumnTarget}
+        onOpenChange={(open) => !open && setDeleteColumnTarget(null)}
+        title="Delete column?"
+        description={
+          <>
+            You are about to delete{' '}
+            <span className="font-semibold text-foreground">“{deleteColumnTarget?.name}”</span>.
+            All tasks currently in this column will be permanently removed. This cannot be undone.
+          </>
+        }
+        confirmLabel="Delete column"
+        cancelLabel="Keep column"
+        loading={isDeleting}
+        onConfirm={confirmDeleteColumn}
+      />
+
+      <ConfirmDialog
+        open={!!deleteTaskTarget}
+        onOpenChange={(open) => !open && setDeleteTaskTarget(null)}
+        title="Delete task?"
+        description={
+          <>
+            You are about to permanently delete{' '}
+            <span className="font-semibold text-foreground">“{deleteTaskTarget?.title}”</span>.
+            Assignees, labels, and comments tied to this task will also be removed.
+          </>
+        }
+        confirmLabel="Delete task"
+        cancelLabel="Keep task"
+        loading={isDeleting}
+        onConfirm={confirmDeleteTask}
       />
     </div>
   );

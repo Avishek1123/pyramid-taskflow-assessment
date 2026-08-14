@@ -219,9 +219,9 @@ function SettingsPageContent() {
               {leaveOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
                   <div className="w-full max-w-sm rounded-xl border border-border bg-white p-5 dark:bg-card">
-                    <h3 className="text-[15px] font-semibold text-foreground">Are you sure?</h3>
-                    <p className="mt-2 text-[13px] text-muted-foreground">
-                      Are you sure you want to leave this workspace? You will be signed out.
+                    <h3 className="text-[15px] font-semibold text-foreground">Leave workspace?</h3>
+                    <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+                      You will leave this workspace and be signed out of Pyramid. You can sign back in anytime with guest login.
                     </p>
                     <div className="mt-5 flex justify-end gap-2">
                       <button
@@ -229,7 +229,7 @@ function SettingsPageContent() {
                         onClick={() => setLeaveOpen(false)}
                         className="rounded-lg px-3 py-1.5 text-[13px] text-muted-foreground hover:bg-muted"
                       >
-                        Cancel
+                        Stay signed in
                       </button>
                       <button
                         type="button"
@@ -239,7 +239,7 @@ function SettingsPageContent() {
                         }}
                         className="rounded-lg bg-[#ef4444] px-3 py-1.5 text-[13px] font-medium text-white"
                       >
-                        Yes, leave
+                        Leave & sign out
                       </button>
                     </div>
                   </div>

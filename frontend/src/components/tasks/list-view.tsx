@@ -227,7 +227,9 @@ export function ListView({
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator className="bg-border" />
                                 <DropdownMenuItem
-                                  onClick={() => onDeleteTask(task.id)}
+                                  onClick={() => {
+                                    window.setTimeout(() => onDeleteTask(task.id), 50);
+                                  }}
                                   className="flex items-center space-x-2 text-red-500 hover:text-red-600 hover:bg-danger-soft focus:text-red-500 cursor-pointer text-xs"
                                 >
                                   <Trash2 className="h-3.5 w-3.5" />
