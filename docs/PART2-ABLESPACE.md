@@ -71,7 +71,11 @@ AbleSpace supports different measurement shapes on purpose, including:
 | Anecdotal | Qualitative note when a number would lie |
 | Custom | Mix numbers, text, checkboxes, calculated fields |
 
-Example I kept in my head while reviewing: a student named Maya has an articulation goal measured as **Accuracy** (“produce /s/ in initial position with 80% accuracy across 20 trials”) and a pragmatic goal measured as **Frequency** (“initiate a peer greeting 3 times per recess”). Those two goals cannot share the same input UI. AbleSpace’s Take Data screen has to reshape itself per goal, or the graphs later will be meaningless.
+![AbleSpace Goals library — Frequency, Accuracy, Task Analysis side by side](screenshots/04-goals-measurements.png)
+
+*Screenshot 3 — Goals (MISC). One list shows Measurement = Frequency, Task Analysis, Accuracy, Task Analysis With Prompt, with averages like `3.50` and `70.00%`. This is proof the product does not force every IEP goal into a single number field.*
+
+Example from the live demo: Demo Student1 has Social Studies tracked as **Frequency** (average 3.50), Reading tracked as **Accuracy** (70%), and Task Analysis goals with per-step percentages. Those UIs cannot be identical. AbleSpace’s Take Data / Log Data flows have to reshape per goal, or later graphs lie.
 
 If goals are missing or the wrong type is chosen, Take Data becomes a dead end. The tutorials (“How to add a Goal?”, “How to take data…”) exist because this setup step is easy to get wrong the first week.
 
@@ -82,16 +86,27 @@ This is the screen the assignment asks about.
 In plain language, the loop is:
 
 1. I am with the student (or I just walked them back to class).
-2. I open Take Data from Caseload / the student.
+2. I open Take Data from Caseload / the student (or jump to **Data** → **+ Log Data**).
 3. I see that student’s goals.
 4. For each goal I work on, I log trials the way the data type expects — tap correct/incorrect for Accuracy, bump a counter for Frequency, run a timer for Duration, pick a prompt level, check off task-analysis steps, or type a short anecdotal note.
 5. I move to the next goal without leaving the flow.
 6. The session is saved against the student, the goal, and the time I was with them.
 
+![AbleSpace Data tab — sessions with logged goal trials and notes](screenshots/03-data-tab-logged.png)
+
+*Screenshot 4 — CAPTURE → Data. Sessions dated `01/01/2023`, rows for Demo Student1 / Demo Student2, Goal/Objective text, Data values (`1`, `Answer Who: No Response`, `Red: Refused`), and clinician Notes. **+ Log Data** is the fast path when you are not starting from Caseload.*
+
+What this screen made concrete for me:
+
+- Data is grouped by **Session** (date + time), then by student and goal — not a flat spreadsheet of anonymous rows.
+- Mixed result shapes sit in one table: a count (`1`), a prompt/MCQ answer (`Answer Who: No Response`), a color/refusal state (`Red: Refused`). That matches the multi–data-type model.
+- Notes live next to the trial (“The student seems very uninterested in Reading goals as of now”) so qualitative context is not lost in a separate app.
+- Filters and **All Time** date range acknowledge catch-up and review, not only live tapping.
+
 Two product details that stood out as honest about school life:
 
-- There is a dedicated **Data tab** for logging quickly (tutorial: “How to log your data quickly using Data tab?”). That is the “I have 40 seconds between kids” path.
-- You can enter data on **past sessions**. Therapists do not always get to tap during the activity. Catch-up is not an edge case; it is Tuesday afternoon.
+- The **Data** tab is the “I have 40 seconds between kids” path (tutorial: “How to log your data quickly using Data tab?”).
+- You can enter / review data on **past sessions**. Therapists do not always get to tap during the activity. Catch-up is Tuesday afternoon, not an edge case.
 
 AbleSpace also tracks **service time at session level and at goal level** while this is happening. That is important. Medicaid and district compliance often care as much about minutes served as about % correct. If time tracking were a separate form after Take Data, people would skip it. Bundling it into the same visit is the right call.
 
@@ -101,8 +116,12 @@ If Take Data only stored numbers, clinicians would still open Excel later. AbleS
 
 - Progress graphs (they advertise 20+ auto-built graph options)
 - Pre-built reports for IEP meetings
-- Service-time reports
+- Service-time / attendance reports
 - Medicaid billing notes meant to be copied and pasted, not rewritten
+
+![AbleSpace Attendance Report — sessions, attendance, service minutes](screenshots/05-attendance-report.png)
+
+*Screenshot 5 — TRACK → Report → Attendance. Demo Student1 selected, date range All Time, summary cards (1 Sessions / 1 Attended / 0 Missed / 30m Service Time), and a Stats table with Present + 30 min. This is the payoff after capture: minutes and attendance without rebuilding a spreadsheet.*
 
 That closed loop is why one-click collection can stick. The click has to buy back weekend paperwork, or paper wins.
 
@@ -205,8 +224,8 @@ AbleSpace’s Caseload → Take Data path is built around the right object (the 
 | --- | --- | --- | --- |
 | 1 | `screenshots/01-caseload-students.png` | Caseload Students table + Take Data | Added |
 | 2 | `screenshots/02-student-goals.png` | Student Goals tab with goal cards | Added |
-| 3 | _(coming)_ | Take Data / Data tab mid-logging | Waiting |
-| 4 | _(coming)_ | A second data type or View Data | Waiting |
-| 5 | _(coming)_ | Graph / report / billing artifact | Waiting |
+| 3 | `screenshots/04-goals-measurements.png` | Goals list with Frequency / Accuracy / Task Analysis | Added |
+| 4 | `screenshots/03-data-tab-logged.png` | Data tab — logged sessions, values, notes | Added |
+| 5 | `screenshots/05-attendance-report.png` | Attendance report + service minutes | Added |
 
-Sources used while writing this: live AbleSpace Caseload session (screenshots above), product/features pages, data-types reference, tutorial index (Take Data, Data tab, past sessions, caseload), and AbleSpace’s writing on caseload management and IEP progress monitoring.
+Sources used while writing this: live AbleSpace session (screenshots above), product/features pages, data-types reference, tutorial index (Take Data, Data tab, past sessions, caseload), and AbleSpace’s writing on caseload management and IEP progress monitoring.
