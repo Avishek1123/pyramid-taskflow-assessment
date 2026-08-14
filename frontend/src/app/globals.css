@@ -261,3 +261,18 @@ select:focus,
     scroll-behavior: auto !important;
   }
 }
+
+@keyframes board-col-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.board-col-enter {
+  animation: board-col-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}

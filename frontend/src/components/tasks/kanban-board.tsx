@@ -126,8 +126,8 @@ export function KanbanBoard({
           return (
             <div
               key={col.id}
-              className="snap-center animate-in fade-in slide-in-from-bottom-2 fill-mode-both"
-              style={{ animationDuration: '320ms', animationDelay: `${Math.min(colIndex * 40, 160)}ms` }}
+              className="snap-center board-col-enter"
+              style={{ animationDelay: `${Math.min(colIndex * 40, 160)}ms` }}
             >
               <KanbanColumn
                 column={col}
