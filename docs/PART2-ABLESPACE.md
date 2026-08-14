@@ -29,11 +29,33 @@ Caseload is my working roster. It is not a district-wide student search; it is �
 - Have I already taken data on them this week?
 - Can I jump straight into logging without configuring anything?
 
-AbleSpace also lets you download/print the caseload and bulk-add students, which tells me they expect real district volumes, not demo lists of five kids. Collaboration features (sharing students with paras/assistants so they can take data too) sit on top of this same list — Caseload is the shared spine of the product.
+![AbleSpace Caseload — Students list with Take Data on each row](screenshots/01-caseload-students.png)
+
+*Screenshot 1 — Caseload → Students. Demo Student1 / Demo Student2 with IEP due, eval due, collaborators, service time, school, and a blue **Take Data** button on every row. This is the real starting point of the workflow.*
+
+What stands out in the live UI:
+
+- Caseload sits under **CAPTURE** next to Calendar, Data, Accommodations, and Service Time — data collection is framed as the daily job, not a report.
+- Each row already exposes **Take Data**, so I do not have to dig into a student just to start logging.
+- Service time is visible on the list (`30`, `60`, plus **Categorize**). Minutes are treated as first-class, not an afterthought.
+- Search, filters, list/grid toggle, and **Add Student** are all on this one screen.
+
+AbleSpace also lets you download/print the caseload and bulk-add students, which tells me they expect real district volumes. Collaboration (sharing students with paras/assistants) sits on this same list — Caseload is the shared spine of the product.
 
 ### 2. Open a student and look at goals before you tap anything
 
 Before Take Data is useful, the student needs goals, and each goal needs a **data type**. This is not a small setup detail — it is the product’s core modeling choice.
+
+![AbleSpace student Goals tab — Demo Student1 with 7 goals](screenshots/02-student-goals.png)
+
+*Screenshot 2 — Caseload → Demo Student1 → Goals. Split view: student list on the left, Goals tab on the right with status chips (Not Started / Behind / On Track / Mastered), **Take Data**, **View Data**, and **+ Add Goal**. Goal cards show title, description, status dropdown, Ask AI, and nested objectives (e.g. 3.1).*
+
+What stands out here:
+
+- Opening a student keeps Caseload context (left rail) while the right pane switches tabs: Profile, **Goals**, Worksheets, Notes, Service Time, Accommodation, Attachments, Daily Logs, Progress, Strength/Need.
+- Goal health is summarized up top before I read any card — I can see the caseload is still “Not Started” for this demo student.
+- Each goal is a card I can act on: take data for this student, view existing data, or add another goal.
+- Nested objectives (Goal 3 → 3.1) show the model is goal → objective, not a flat checklist.
 
 AbleSpace supports different measurement shapes on purpose, including:
 
@@ -177,13 +199,14 @@ AbleSpace’s Caseload → Take Data path is built around the right object (the 
 
 ---
 
-## Optional screenshots for submission
+## Screenshots
 
-If you have login access, attach these under the matching sections above:
+| # | File | What it shows | Status |
+| --- | --- | --- | --- |
+| 1 | `screenshots/01-caseload-students.png` | Caseload Students table + Take Data | Added |
+| 2 | `screenshots/02-student-goals.png` | Student Goals tab with goal cards | Added |
+| 3 | _(coming)_ | Take Data / Data tab mid-logging | Waiting |
+| 4 | _(coming)_ | A second data type or View Data | Waiting |
+| 5 | _(coming)_ | Graph / report / billing artifact | Waiting |
 
-1. Caseload list  
-2. One student with goals of two different data types  
-3. Take Data (or Data tab) mid-logging  
-4. A graph or session/billing artifact produced from that data  
-
-Sources used while writing this: AbleSpace product/features pages, data-types reference, tutorial index (Take Data, Data tab, past sessions, caseload), and AbleSpace’s own writing on caseload management and IEP progress monitoring.
+Sources used while writing this: live AbleSpace Caseload session (screenshots above), product/features pages, data-types reference, tutorial index (Take Data, Data tab, past sessions, caseload), and AbleSpace’s writing on caseload management and IEP progress monitoring.
