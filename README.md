@@ -169,7 +169,7 @@ Keep the repo public for at least 45 days after submission.
 2. Settings:
    - **Root Directory:** `backend`
    - **Runtime:** Node
-   - **Build Command:** `npm install && npm run build`
+   - **Build Command:** `npm install --include=dev && npm run build`
    - **Start Command:** `npm run start:prod`
    - **Instance:** Free
 3. Environment variables:
